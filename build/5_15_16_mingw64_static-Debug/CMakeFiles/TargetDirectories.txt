@@ -1,0 +1,9 @@
+C:/qtproject/Mp3PlayerQT/build/5_15_16_mingw64_static-Debug/CMakeFiles/Mp3PlayerQT.dir
+C:/qtproject/Mp3PlayerQT/build/5_15_16_mingw64_static-Debug/CMakeFiles/edit_cache.dir
+C:/qtproject/Mp3PlayerQT/build/5_15_16_mingw64_static-Debug/CMakeFiles/rebuild_cache.dir
+C:/qtproject/Mp3PlayerQT/build/5_15_16_mingw64_static-Debug/CMakeFiles/list_install_components.dir
+C:/qtproject/Mp3PlayerQT/build/5_15_16_mingw64_static-Debug/CMakeFiles/install.dir
+C:/qtproject/Mp3PlayerQT/build/5_15_16_mingw64_static-Debug/CMakeFiles/install/local.dir
+C:/qtproject/Mp3PlayerQT/build/5_15_16_mingw64_static-Debug/CMakeFiles/install/strip.dir
+C:/qtproject/Mp3PlayerQT/build/5_15_16_mingw64_static-Debug/CMakeFiles/Mp3PlayerQT_autogen_timestamp_deps.dir
+C:/qtproject/Mp3PlayerQT/build/5_15_16_mingw64_static-Debug/CMakeFiles/Mp3PlayerQT_autogen.dir

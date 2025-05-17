@@ -1,0 +1,21 @@
+# ninja log v6
+40	5705	7689420382296461	Mp3PlayerQT_autogen/timestamp	ef76b72c7848415b
+40	5705	7689420382296461	Mp3PlayerQT_autogen/mocs_compilation.cpp	ef76b72c7848415b
+40	5705	7689420382296461	C:/qtproject/Mp3PlayerQT/build/5_15_16_mingw64_static-Debug/Mp3PlayerQT_autogen/timestamp	ef76b72c7848415b
+40	5705	7689420382296461	C:/qtproject/Mp3PlayerQT/build/5_15_16_mingw64_static-Debug/Mp3PlayerQT_autogen/mocs_compilation.cpp	ef76b72c7848415b
+5734	11414	7689420383800892	CMakeFiles/Mp3PlayerQT.dir/C_/msys64/mingw64/qt5-static/lib/cmake/Qt5Gui/Qt5Gui_QICNSPlugin_Import.cpp.obj	b6eeb8cd5a6e0da5
+5796	11443	7689420384415207	CMakeFiles/Mp3PlayerQT.dir/C_/msys64/mingw64/qt5-static/lib/cmake/Qt5Gui/Qt5Gui_QWindowsIntegrationPlugin_Import.cpp.obj	5046a47b5a8ace65
+5782	11462	7689420384268601	CMakeFiles/Mp3PlayerQT.dir/C_/msys64/mingw64/qt5-static/lib/cmake/Qt5Gui/Qt5Gui_QWbmpPlugin_Import.cpp.obj	4b32bc46e2a0b5ae
+5741	11463	7689420383856700	CMakeFiles/Mp3PlayerQT.dir/C_/msys64/mingw64/qt5-static/lib/cmake/Qt5Gui/Qt5Gui_QICOPlugin_Import.cpp.obj	fe4760d3aab97d20
+5710	11464	7689420383559159	CMakeFiles/Mp3PlayerQT.dir/Mp3PlayerQT_autogen/mocs_compilation.cpp.obj	2c544818879775ff
+5728	11465	7689420383734323	CMakeFiles/Mp3PlayerQT.dir/C_/msys64/mingw64/qt5-static/lib/cmake/Qt5Gui/Qt5Gui_QGifPlugin_Import.cpp.obj	d50770fcce6d5832
+5789	11471	7689420384350248	CMakeFiles/Mp3PlayerQT.dir/C_/msys64/mingw64/qt5-static/lib/cmake/Qt5Gui/Qt5Gui_QWebpPlugin_Import.cpp.obj	e856bb515de6c3fa
+5768	11481	7689420384131192	CMakeFiles/Mp3PlayerQT.dir/C_/msys64/mingw64/qt5-static/lib/cmake/Qt5Gui/Qt5Gui_QTgaPlugin_Import.cpp.obj	c0cd05698807158a
+5775	11482	7689420384198370	CMakeFiles/Mp3PlayerQT.dir/C_/msys64/mingw64/qt5-static/lib/cmake/Qt5Gui/Qt5Gui_QTiffPlugin_Import.cpp.obj	36736d49c04814db
+5747	11483	7689420383925366	CMakeFiles/Mp3PlayerQT.dir/C_/msys64/mingw64/qt5-static/lib/cmake/Qt5Gui/Qt5Gui_QJpegPlugin_Import.cpp.obj	6a50d57114d4aa34
+5754	11484	7689420383994662	CMakeFiles/Mp3PlayerQT.dir/C_/msys64/mingw64/qt5-static/lib/cmake/Qt5Gui/Qt5Gui_QSvgIconPlugin_Import.cpp.obj	9b8b3faaddcca4db
+5761	11485	7689420384062510	CMakeFiles/Mp3PlayerQT.dir/C_/msys64/mingw64/qt5-static/lib/cmake/Qt5Gui/Qt5Gui_QSvgPlugin_Import.cpp.obj	89c6cd6c988bd135
+5716	11507	7689420383611759	CMakeFiles/Mp3PlayerQT.dir/main.cpp.obj	bda382db4f242444
+5722	11911	7689420383674428	CMakeFiles/Mp3PlayerQT.dir/mainwindow.cpp.obj	ac9280d5bd297cdf
+11415	13208	7689420440598478	CMakeFiles/Mp3PlayerQT.dir/C_/msys64/mingw64/qt5-static/lib/cmake/Qt5Widgets/Qt5Widgets_QWindowsVistaStylePlugin_Import.cpp.obj	1cb94a8725e996de
+13208	16633	7689420458533991	Mp3PlayerQT.exe	9a3ef91ecd4f2925
