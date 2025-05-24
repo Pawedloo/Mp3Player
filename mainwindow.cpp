@@ -16,8 +16,7 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::on_openButton_clicked()
-{
-    // Открываем диалог выбора аудиофайла
+{  
     QString filePath = QFileDialog::getOpenFileName(
         this,
         tr("Open Audio File"),
@@ -25,8 +24,7 @@ void MainWindow::on_openButton_clicked()
         tr("Audio Files (*.mp3 *.wav *.ogg *.flac)")
         );
 
-    if (!filePath.isEmpty()) {
-        // Выводим путь к файлу в консоль (можно заменить на нужную вам логику)
+    if (!filePath.isEmpty()) { 
         qDebug() << "Selected audio file:" << filePath;
     }
 }
