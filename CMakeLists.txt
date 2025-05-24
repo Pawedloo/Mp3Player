@@ -38,6 +38,9 @@ else()
     else()
         add_executable(Mp3PlayerQT
             ${PROJECT_SOURCES}
+
+
+            recourses.qrc
         )
     endif()
 endif()
