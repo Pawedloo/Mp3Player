@@ -1,9 +1,9 @@
 #include "mainwindow.h"
+#include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QDebug>
-#include <QMediaPlayer>
-#include <QAudioOutput>
 #include <QMessageBox>
+#include <QDir>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -13,16 +13,21 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    player = new QMediaPlayer;
+    audioOutput = new QAudioOutput();
+    audioOutput -> setVolume(100);
 
-    player = new QMediaPlayer(this);
-    audioOutput = new QAudioOutput(this);
     player->setAudioOutput(audioOutput);
-
-
-    audioOutput->setVolume(0.5);
-
-
     ui->playButton->setEnabled(false);
+    connect(player, &QMediaPlayer::durationChanged, this, [this](int duration){
+        qDebug()<<duration;
+        int durationInSeconds=duration/1000;
+        int durationMinutes = durationInSeconds/60;
+        int durationSeconds=durationInSeconds - durationMinutes * 60;
+        ui->horizontalSlider_2->setMaximum(durationInSeconds);
+        ui->label->setText(QString::number(durationMinutes) + ":" + QString::number(durationSeconds));
+    });
+
 }
 
 MainWindow::~MainWindow()
@@ -43,24 +48,26 @@ void MainWindow::on_openButton_clicked()
 
     if (!filePath.isEmpty()) {
         currentFilePath = filePath;
-        player->setSource(QUrl::fromLocalFile(filePath));
         qDebug() << "Selected audio file:" << filePath;
-
 
         ui->playButton->setEnabled(true);
         ui->playButton->setText("Play");
     }
 }
-
 void MainWindow::on_playButton_clicked()
 {
-    if (player->playbackState() == QMediaPlayer::PlayingState) {
-
+    if (player->isPlaying()) {
         player->pause();
         ui->playButton->setText("Play");
     } else {
-
+        player->setSource(QUrl::fromLocalFile(currentFilePath));
         player->play();
         ui->playButton->setText("Pause");
     }
 }
+
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+    audioOutput->setVolume(value);
+}
+
