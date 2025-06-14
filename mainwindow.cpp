@@ -25,7 +25,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->nextButton->setEnabled(false);
     ui->prevButton->setEnabled(false);
 
-    // Подключаем сигналы
     connect(player, &QMediaPlayer::durationChanged, this, [this](qint64 duration) {
         ui->positionSlider->setMaximum(static_cast<int>(duration / 1000));
         updateTimeDisplay(duration);
