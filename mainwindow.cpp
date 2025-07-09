@@ -22,16 +22,16 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // Setup media player
-    audioOutput->setVolume(0.5f); // 50% volume by default
+
+    audioOutput->setVolume(0.5f);
     ui->volumeSlider->setValue(50);
     player->setAudioOutput(audioOutput);
     player->setPlaybackRate(playbackSpeed);
 
-    // Initial UI state
+
     updatePlayerControls();
 
-    // Connect signals and slots
+
     connect(ui->openFileButton, &QPushButton::clicked, this, &MainWindow::on_openButton_clicked);
     connect(ui->playButton, &QPushButton::clicked, this, &MainWindow::on_playButton_clicked);
     connect(ui->pauseButton, &QPushButton::clicked, this, &MainWindow::on_pauseButton_clicked);
@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->playlistsList, &QListWidget::currentTextChanged, this, &MainWindow::on_collectionsList_currentTextChanged);
     connect(ui->collectionTracksList, &QListWidget::itemDoubleClicked, this, &MainWindow::on_collectionTracksList_itemDoubleClicked);
 
-    // Load saved data
+
     loadTrackList();
     updateCollectionsList();
 }
@@ -88,8 +88,8 @@ void MainWindow::on_shuffleButton_clicked()
 
 void MainWindow::on_speedButton_clicked()
 {
-    playbackSpeed = 1.0f; // Reset to normal speed
-    ui->speedSlider->setValue(100); // 100% = 1.0 speed
+    playbackSpeed = 1.0f;
+    ui->speedSlider->setValue(100);
     applyPlaybackSpeed();
 }
 
