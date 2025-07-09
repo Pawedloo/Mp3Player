@@ -23,6 +23,14 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Mp3PlayerQT
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        musiccollection.cpp
+        musiccollection.h
+        assets/add.png assets/delete.png assets/folder_open.png assets/home.png assets/logo.png assets/new_file.png assets/open_file.png assets/search.png
+        assets/add_playlist.png
+        assets/edit.png
+        assets/settings.png
+        assets/add_box.png assets/remove.png
+        assets/pause.png assets/stop.png
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Mp3PlayerQT APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
