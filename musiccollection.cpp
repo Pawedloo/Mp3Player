@@ -6,131 +6,80 @@ MusicCollection::MusicCollection(QObject *parent) : QObject(parent)
     loadCollections();
 }
 
-void MusicCollection::createCollection(const QString &name)
+QStringList MusicCollection::getCollectionNames() const
 {
-    if (name.isEmpty()) {
-        qWarning() << "Cannot create collection with empty name";
-        return;
-    }
+    return collections.keys();
+}
 
-    if (!m_collections.contains(name)) {
-        m_collections.insert(name, QStringList());
-        emit collectionCreated(name);
+QStringList MusicCollection::getTracksInCollection(const QString &collectionName) const
+{
+    return collections.value(collectionName);
+}
+
+void MusicCollection::addCollection(const QString &name)
+{
+    if (!collections.contains(name)) {
+        collections.insert(name, QStringList());
         saveCollections();
     }
 }
 
 void MusicCollection::renameCollection(const QString &oldName, const QString &newName)
 {
-    if (newName.isEmpty()) {
-        qWarning() << "Cannot rename collection to empty name";
-        return;
-    }
-
-    if (m_collections.contains(oldName) && !m_collections.contains(newName)) {
-        QStringList tracks = m_collections.value(oldName);
-        m_collections.remove(oldName);
-        m_collections.insert(newName, tracks);
-        emit collectionRenamed(oldName, newName);
+    if (collections.contains(oldName) && !collections.contains(newName)) {
+        QStringList tracks = collections.take(oldName);
+        collections.insert(newName, tracks);
         saveCollections();
     }
 }
 
 void MusicCollection::removeCollection(const QString &name)
 {
-    if (m_collections.remove(name) > 0) {
-        emit collectionRemoved(name);
-        saveCollections();
-    }
-}
-
-QStringList MusicCollection::getCollectionNames() const
-{
-    return m_collections.keys();
+    collections.remove(name);
+    saveCollections();
 }
 
 void MusicCollection::addTrackToCollection(const QString &collectionName, const QString &trackPath)
 {
-    if (!m_collections.contains(collectionName)) {
-        qWarning() << "Collection" << collectionName << "does not exist";
-        return;
-    }
-
-    if (trackPath.isEmpty() || !QFile::exists(trackPath)) {
-        qWarning() << "Invalid track path:" << trackPath;
-        return;
-    }
-
-    QStringList &tracks = m_collections[collectionName];
-    if (!tracks.contains(trackPath)) {
-        tracks.append(trackPath);
-        emit trackAddedToCollection(collectionName, trackPath);
-        saveCollections();
-    }
-}
-
-void MusicCollection::removeTrackFromCollection(const QString &collectionName, const QString &trackPath)
-{
-    if (m_collections.contains(collectionName)) {
-        QStringList &tracks = m_collections[collectionName];
-        if (tracks.removeAll(trackPath) > 0) {
-            emit trackRemovedFromCollection(collectionName, trackPath);
+    if (collections.contains(collectionName)) {
+        QStringList &tracks = collections[collectionName];
+        if (!tracks.contains(trackPath)) {
+            tracks.append(trackPath);
             saveCollections();
         }
     }
 }
 
-QStringList MusicCollection::getTracksInCollection(const QString &collectionName) const
+void MusicCollection::removeTrackFromCollection(const QString &collectionName, const QString &trackPath)
 {
-    return m_collections.value(collectionName, QStringList());
+    if (collections.contains(collectionName)) {
+        collections[collectionName].removeAll(trackPath);
+        saveCollections();
+    }
 }
 
-void MusicCollection::saveCollections(const QString &filePath)
+void MusicCollection::saveCollections()
 {
-    QFile file(filePath);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open file for writing:" << filePath;
-        return;
+    QSettings settings;
+    settings.beginWriteArray("Collections");
+    int i = 0;
+    for (auto it = collections.constBegin(); it != collections.constEnd(); ++it) {
+        settings.setArrayIndex(i++);
+        settings.setValue("name", it.key());
+        settings.setValue("tracks", it.value());
     }
-
-    QTextStream out(&file);
-    for (auto it = m_collections.constBegin(); it != m_collections.constEnd(); ++it) {
-        out << "[" << it.key() << "]\n";
-        for (const QString &track : it.value()) {
-            out << track << "\n";
-        }
-        out << "\n";
-    }
-    file.close();
+    settings.endArray();
 }
 
-void MusicCollection::loadCollections(const QString &filePath)
+void MusicCollection::loadCollections()
 {
-    QFile file(filePath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open file for reading:" << filePath;
-        return;
+    QSettings settings;
+    int size = settings.beginReadArray("Collections");
+    for (int i = 0; i < size; ++i) {
+        settings.setArrayIndex(i);
+        QString name = settings.value("name").toString();
+        QStringList tracks = settings.value("tracks").toStringList();
+        collections.insert(name, tracks);
     }
-
-    m_collections.clear();
-    QTextStream in(&file);
-    QString currentCollection;
-
-    while (!in.atEnd()) {
-        QString line = in.readLine().trimmed();
-        if (line.startsWith('[') && line.endsWith(']')) {
-            currentCollection = line.mid(1, line.length() - 2);
-            m_collections.insert(currentCollection, QStringList());
-        }
-        else if (!line.isEmpty() && !currentCollection.isEmpty()) {
-            if (QFile::exists(line)) {
-                m_collections[currentCollection].append(line);
-            } else {
-                qWarning() << "Track file not found:" << line;
-            }
-        }
-    }
-
-    file.close();
-    emit collectionsLoaded();
+    settings.endArray();
 }

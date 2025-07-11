@@ -31,6 +31,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         assets/settings.png
         assets/add_box.png assets/remove.png
         assets/pause.png assets/stop.png
+        assets/close.png assets/fullscreen.png assets/minimize.png assets/normal.png
+        assets/lyrics.png
+        assets/delete_song.png assets/edit_tracks.png
+
+
+
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Mp3PlayerQT APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

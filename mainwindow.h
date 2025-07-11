@@ -4,9 +4,15 @@
 #include <QMainWindow>
 #include <QMediaPlayer>
 #include <QAudioOutput>
-#include <QDir>
-#include <QListWidget>
+#include <QPropertyAnimation>
+#include <QGraphicsOpacityEffect>
 #include "musiccollection.h"
+#include <QListWidgetItem>
+#include <QMouseEvent>
+#include <QDateTime>
+#include <QMap>
+#include <QTimer>
+#include <QTableWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,40 +23,54 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+protected:
+    void paintEvent(QPaintEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    bool eventFilter(QObject *obj, QEvent *event) override;
+
 private slots:
-    // Основные слоты
-    void on_openButton_clicked();
-    void on_openFolderButton_clicked();
-    void on_playButton_clicked();
-    void on_pauseButton_clicked();
-    void on_stopButton_clicked();
-    void on_nextButton_clicked();
-    void on_prevButton_clicked();
-    void on_shuffleButton_clicked();
-    void on_speedButton_clicked();
+    void togglePlayPause();
+    void updatePlaybackStatistics();
+    void stopPlayback();
+    void playNextTrack();
+    void playPreviousTrack();
+    void toggleShuffle();
+    void resetSpeed();
 
-    // Управление коллекциями
-    void on_createCollectionButton_clicked();
-    void on_renameCollectionButton_clicked();
-    void on_removeCollectionButton_clicked();
-    void on_addToCollectionButton_clicked();
-    void on_removeFromCollectionButton_clicked();
-    void on_collectionsList_currentTextChanged(const QString &currentText);
-    void on_collectionTracksList_itemDoubleClicked(QListWidgetItem *item);
+    void minimizeWindow();
+    void toggleFullscreen();
+    void closeWindow();
 
-    // Управление воспроизведением
-    void on_volumeSlider_valueChanged(int value);
-    void on_speedSlider_valueChanged(int value);
-    void on_positionSlider_sliderMoved(int position);
-    void on_mediaStatusChanged(QMediaPlayer::MediaStatus status);
-    void on_positionChanged(qint64 position);
+    void openFile();
+    void openFolder();
 
-    // Поиск и навигация
-    void on_searchTextChanged(const QString &text);
-    void on_trackList_itemDoubleClicked(QListWidgetItem *item);
+
+    void handleVolumeChange(int value);
+    void handleSpeedChange(int value);
+    void seekTrack(int position);
+
+    void createCollection();
+    void renameCollection();
+    void removeCollection();
+    void addToCollection();
+    void removeFromCollection();
+    void updateCurrentCollection(const QString &collectionName);
+
+
+    void updatePlaybackPosition(qint64 position);
+    void handleMediaStatusChanged(QMediaPlayer::MediaStatus status);
+    void updateTimeDisplay(qint64 position);
+    void updateTrackInfo();
+    void updatePlayerControls();
+    void removeTrack();
+    void renameTrack();
+    void playSelectedTrack(QListWidgetItem *item);
+    void playSelectedCollectionTrack(QListWidgetItem *item);
+    void filterTracks(const QString &text);
 
 private:
     Ui::MainWindow *ui;
@@ -65,20 +85,36 @@ private:
     int currentTrackIndex;
     bool shuffleMode;
     float playbackSpeed;
+    bool isSeeking;
+    bool isFullscreen;
+    QPoint dragPosition;
 
-    // Вспомогательные методы
+    void initUI();
+    void initConnections();
+    void applyStyles();
+    void setupAnimations();
     void loadFolder(const QString &folderPath);
     void playTrack(int index);
     void playRandomTrack();
-    void updateTimeDisplay(qint64 duration);
-    void updateTrackInfo();
-    void filterTracks(const QString &filter);
+    void updateTrackNameInCollections(const QString &oldPath, const QString &newPath);
     void updateCollectionsList();
     void updateCurrentCollectionTracks();
     void saveTrackList();
     void loadTrackList();
-    void updatePlayerControls();
-    void applyPlaybackSpeed();
+
+    struct TrackStats {
+        int playCount = 0;
+        qint64 totalPlayTime = 0;
+        QDateTime lastPlayed;
+    };
+
+    QMap<QString, TrackStats> trackStatistics;
+
+    QTimer* m_playbackTimer;
+    qint64 currentTrackStartTime = 0;
+
+    void updateTrackStats(const QString& filePath, qint64 duration);// Переименовываем для ясности
+    qint64 m_currentTrackStartTime = 0;
 };
 
-#endif
+#endif // MAINWINDOW_H
